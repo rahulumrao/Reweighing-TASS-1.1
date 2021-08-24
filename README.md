@@ -14,10 +14,10 @@ Awasthi, S, Nair, NN. Exploring high‐dimensional free energy landscapes of che
 This Modular Fortran program unbias the Probability of TASS output generated in CPMD run, which can be used to compute multidimensional (1D/2D) free energy via WHAM reweighting. It can also directly generate 1D free enrgy using Mean Force method (PMF). \
 Basis Spline interpolation can be performed to find intermediate points in free energy .\
 
-#```diff
+```diff
 + ***UPDATE    :: "Reweight Biased Simulation from both CPMD and PLUMED Packages."*** \
 + **IMPORTANT :: ALL THE ARGUMENTS IN THE RUN FILE ARE CASE SENSITIVE.**
-#```
+```
 
 [Ref : https://github.com/jacobwilliams/bspline-fortran]
 - ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) `#f03c15`
