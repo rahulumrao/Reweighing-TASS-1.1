@@ -14,8 +14,11 @@ Awasthi, S, Nair, NN. Exploring high‐dimensional free energy landscapes of che
 This Modular Fortran program unbias the Probability of TASS output generated in CPMD run, which can be used to compute multidimensional (1D/2D) free energy via WHAM reweighting. It can also directly generate 1D free enrgy using Mean Force method (PMF). \
 Basis Spline interpolation can be performed to find intermediate points in free energy .\
 
-UPDATE    :: "It can reweight biased simulation from both CPMD and PLUMED package."
-IMPORTANT :: All the arguments in the run file are case sensitive.
+***UPDATE    :: "It can reweight biased simulation from both CPMD and PLUMED package."***
+**IMPORTANT :: All the arguments in the run file are case sensitive.**
+
+-[x]#379
+
 [Ref : https://github.com/jacobwilliams/bspline-fortran]
 
 # Modular Code Written by :- Rahul Verma
@@ -57,14 +60,11 @@ make distclean : clean the directory
 ```bash
 How to Run -->
 "-------------"
-Two bash script is given along with the program (run_pmf.sh & run_prob.sh) 
+A bash script is given along with the program (run_tass.sh) 
 Create execute permission by following command :
-chmod 755 run_pmf.sh
-chomd 755 run_prob.sh
-To compute Free Energy using Mean Force method :: run_pmf.sh
-./run_pmf.sh
-To compute multidimensional probabilities :: run_prob.sh
-./run_prob.sh
+chomd 755 run_tass.sh
+To compute Free Energy using Mean Force method =-> -tool pmf   (case sensitive)
+To compute multidimensional probabilities      =-> -tool probT (case sensitive)
 ```
 
 # AUTHOUR
