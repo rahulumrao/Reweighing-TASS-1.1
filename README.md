@@ -15,9 +15,8 @@ This Modular Fortran program unbias the Probability of TASS output generated in 
 Basis Spline interpolation can be performed to find intermediate points in free energy .\
 
 ```diff
-- ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+) 
-+ ***UPDATE    :: "Reweight Biased Simulation from both CPMD and PLUMED Packages."*** \
-+ **IMPORTANT :: ALL THE ARGUMENTS IN THE RUN FILE ARE CASE SENSITIVE.**
++ UPDATE    :: "Reweight Biased Simulation from both CPMD and PLUMED Packages."
++ IMPORTANT :: ALL THE ARGUMENTS IN THE RUN FILE ARE CASE SENSITIVE.
 ```
 
 [Ref : https://github.com/jacobwilliams/bspline-fortran]
