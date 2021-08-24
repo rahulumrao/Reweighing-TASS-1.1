@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Reweighing-CPMD-TASS
 
 # Brief Description
@@ -72,3 +73,7 @@ RAHUL VERMA \
 DEPARTMENT OF CHEMISTRY \
 IIT KANPUR, INDIA \
 Email : vrahul@iitk.ac.in
+=======
+# Reweighing-TASS-1.1
+Reweight TASS based biased simulation from CPMD and PLUMED 
+>>>>>>> f4e6ceb5021c9e199a36eb6bdf4e33d9d271caf4
