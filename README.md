@@ -29,7 +29,7 @@ Basis Spline interpolation can be performed to find intermediate points in free 
 bin/Probability_analysis.x 	 	# executable
 -T0 300                 		# Physical system Temperature
 -T 1000                 		# CV Temperature
--prog_name				# Name of MD package (CPMD/PLUMED)
+-prog_name CPMD/PLUMED			# Name of MD package (CPMD/PLUMED)
 -bias_fact 1500         		# Metadynamics Bias Factor
 -tmin 5000              		# Minimum MD steps to compute Probability
 -ncv 5                  		# Total CV's in TASS Simulation
@@ -39,10 +39,10 @@ bin/Probability_analysis.x 	 	# executable
 -tool pmf		 		# pmf/probT [pmf-->compute potential of mean force ; probT --> Unbias Probability]
 -interpolate		 		# Basis Spline 1D interpolation if one wants to do for pmf free energy
 -nr 14			 		# Number of replica (total umbrella window during simulation)
--Prob_nD				# Dimension of Probabilty to be generated [1/2/3]
--CV_num					# Probabilty generated along CV indicis [1 --> 1D ; 1 2 --> for 2D along CV1 and CV2 etc..]
+-Prob_nD 1				# Dimension of Probabilty to be generated [1/2/3]
+-CV_num	1 2				# Probabilty generated along CV indicis [1 --> 1D ; 1 2 --> for 2D along CV1 and CV2 etc..]
 -pfrqMD 1				# Frequency of update in cvmdck_mtd file during run
--dtMTD					# Frequency of Hill Update during Metadynamics
+-dtMTD 200				# Frequency of Hill Update during Metadynamics
 -grid 1.5 4.5 0.02 1.0 10.0 0.02 1.0 9.0 0.02 3.0 5.0 0.02 1.0 6.0 0.05 ,\ # gridmin gridmax griddif for every CV
 ```
 
