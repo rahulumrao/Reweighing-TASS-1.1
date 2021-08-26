@@ -11,8 +11,8 @@ Exploring high dimensional free energy landscapes: Temperature accelerated slice
 Awasthi, S, Nair, NN. Exploring high‐dimensional free energy landscapes of chemical reactions. WIREs Comput Mol Sci. 2019.\
 [![DOI]  https://doi.org/10.1002/wcms.1398 ]
 
-This Modular Fortran program unbias the Probability of TASS output generated in CPMD run, which can be used to compute multidimensional (1D/2D) free energy via WHAM reweighting. It can also directly generate 1D free enrgy using Mean Force method (PMF). \
-Basis Spline interpolation can be performed to find intermediate points in free energy .\
+This Modular Fortran program unbias the Probability of TASS output generated in CPMD/PLUMED run, which can be used to compute multidimensional (1D/2D) free energy via WHAM reweighting. It can also directly generate 1D free energy using Mean Force method (MF). \
+1D and 2D Basis Spline interpolation can be performed to find intermediate points in free energy .
 
 ```diff
 + UPDATE    :: "Reweight Biased Simulation from both CPMD and PLUMED Packages."
