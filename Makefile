@@ -24,9 +24,8 @@ FCFLAGS=-g3 -fcheck=all -fbacktrace
 TARGET=Probability_analysis.x
 EXE=1d_bspline.x
 EXE2=2d_bspline.x
-WHAM=wham.x
 
-#WHAM_OBJECT=wham_code.o
+
 SPOBJECT=bspline_kinds_module.o bspline_sub_module.o bspline_oo_module.o bspline_module.o pyplot_module.o
 OBJECTS= GetSteps.o GetFileName.o Input_file.o Error_msg.o MTD_Unbais.o MTD_Potential.o US_Prob.o \
 	 US_MTD.o US_TEMP.o Mean_Force.o \
@@ -35,7 +34,6 @@ OBJECTS= GetSteps.o GetFileName.o Input_file.o Error_msg.o MTD_Unbais.o MTD_Pote
 1d_bspline.x		: $(SPOBJECT) GetSteps.o		   ; $(F90) -o $(EXE) $(SRCDIR)/Interp_Bspline.F90 GetSteps.o $(SPOBJECT)
 2d_bspline.x		: $(SPOBJECT) GetSteps.o		   ; $(F90) -o $(EXE2) $(SRCDIR)/Interp_Bspline_2D.F90 GetSteps.o $(SPOBJECT)
 Probability_analysis.x  : $(OBJECTS) 				   ; $(F90) -o $(TARGET) $(FCFLAGS) $(SRCDIR)/Main.F90 $(OBJECTS)
-wham.x                  : GetSteps.o                               ; $(FC)  -o $(WHAM) $(SRCDIR)/wham_code.F90
 
 GetSteps.o  		:   $(SRCDIR)/GetSteps.F90 	           ; $(F90) -c $(SRCDIR)/GetSteps.F90
 GetFileName.o 		:   $(SRCDIR)/GetFileName.F90 	           ; $(F90) -c $(SRCDIR)/GetFileName.F90
@@ -43,7 +41,6 @@ Input_file.o 		:   $(SRCDIR)/Input_file.F90 	           ; $(F90) -c $(SRCDIR)/In
 Error_msg.o             :   $(SRCDIR)/Error_msg.F90                 ; $(F90) -c $(SRCDIR)/Error_msg.F90	
 MTD_Unbais.o    	:   $(SRCDIR)/MTD_Unbais.F90	           ; $(F90) $(FCFLAGS) -c $(SRCDIR)/MTD_Unbais.F90
 MTD_Potential.o 	:   $(SRCDIR)/MTD_Potential.F90	           ; $(F90) $(FCFLAGS) -c $(SRCDIR)/MTD_Potential.F90
-wham_code.o             :   $(SRCDIR)/wham_code.F90                ; $(FC)  -c $(SRCDIR)/wham_code.F90	
 US_Prob.o   		:   $(SRCDIR)/US_Prob.F90	           ; $(F90) $(FCFLAGS) -c $(SRCDIR)/US_Prob.F90
 US_MTD.o    		:   $(SRCDIR)/US_MTD.F90	           ; $(F90) -c $(SRCDIR)/US_MTD.F90
 US_TEMP.o   		:   $(SRCDIR)/US_TEMP.F90	           ; $(F90) $(FCFLAGS) -c $(SRCDIR)/US_TEMP.F90

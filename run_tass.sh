@@ -1,5 +1,5 @@
 #!/bin/bash
-  Probability_analysis.x ,\
+  bin/Probability_analysis.x ,\
  -T0 300                 ,\
  -T 1000                 ,\
  -prog_name PLUMED	 ,\
