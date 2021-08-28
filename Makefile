@@ -8,7 +8,7 @@ default:
 	@echo "make clean     : remove object and mod files"
 	@echo "make distclean : clean the directory"
 
-TOPDIR=/home/vrahul/My_Program/Rahul/Probability/Reweighing-TASS
+TOPDIR=#current_working_directory_path
 LIBDIR=$(TOPDIR)/lib
 SRCDIR=$(TOPDIR)/src
 BINDIR=$(TOPDIR)/bin
@@ -17,9 +17,8 @@ PYPDIR=$(BSPDIR)/src/tests/pyplot-fortran
 BSPFLAGS=$(TOPDIR)/bspline-fortran/build/libbspline-fortran.a
 
 F90=gfortran
-FC=mpif90
-#FCFLAGS=-fsanitize=undefined -fsanitize=address -fsanitize=leak
-FCFLAGS=-g3 -fcheck=all -fbacktrace 
+#FC=mpif90
+#FCFLAGS=-g3 -fcheck=all -fbacktrace 
 
 TARGET=Probability_analysis.x
 EXE=1d_bspline.x
