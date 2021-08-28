@@ -3,7 +3,7 @@ Reweighing-CPMD-TASS
 
 # Brief Description
 
-Temperatture Accelarated Sliced Sampling (TASS) method combines the temperature accelerated molecular dynamics with umbrella sampling and
+Temperature Accelerated Sliced Sampling (TASS) method combines the temperature accelerated molecular dynamics with umbrella sampling and
 metadynamics to sample the collective variable space in an efficient manner. \
 [Ref :\
 Exploring high dimensional free energy landscapes: Temperature accelerated sliced sampling J. Chem. Phys. 146, 094108 (2017).\
