@@ -48,8 +48,11 @@ bin/Probability_analysis.x 	 	# executable
 
 ```Makefile
 INSTALL :
-Modify Makefile to change the compiler [if needed]
-Type...
+./configure
+#Choose compier [gnu/intel]
+./configure -h # for more options
+A Makefile will be created
+...
 make install   : create executabls
 make bspline   : compile B-spline modules
 make clean     : remove object and mod files
