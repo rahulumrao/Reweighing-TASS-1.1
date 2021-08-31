@@ -17,6 +17,7 @@ This Modular Fortran program unbias the Probability of TASS output generated in 
 ```diff
 + UPDATE    :: "Reweight Biased Simulation from both CPMD and PLUMED Packages."
 + IMPORTANT :: ALL THE ARGUMENTS IN THE RUN FILE ARE CASE SENSITIVE.
++ COLVAR file must have the format of CV1_ext CV2_ext CV3_ext ....
 - !! PERIODICITY IS NOT YET IMPLIMENTED !!
 ```
 [Ref : https://github.com/jacobwilliams/bspline-fortran]
