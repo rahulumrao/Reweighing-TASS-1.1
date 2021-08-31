@@ -71,7 +71,7 @@ To compute Free Energy using Mean Force method =-> -tool pmf   (case sensitive)
 To compute multidimensional probabilities      =-> -tool probT (case sensitive)
 ```
 
-# AUTHOUR
+# AUTHOR
 
 RAHUL VERMA \
 DEPARTMENT OF CHEMISTRY \
