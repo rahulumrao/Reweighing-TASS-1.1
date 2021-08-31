@@ -208,7 +208,7 @@ ALLOCATE(kcons(nr))             ; ALLOCATE(pcons(nr))
 ALLOCATE(t_cv(ncv))             ; ALLOCATE(norm(nr))
 !-----------------------------------------------------------------------------------------------------!
 OPEN(10,FILE='input.inp',STATUS='old',IOSTAT=ios,ACTION='read')
-IF (ios .lt. 0) STOP "ERROR : FILE input.inp doesn't exist..!"
+IF (ios .ne. 0) STOP "ERROR : FILE input.inp doesn't exist..!"
 
 101 FORMAT (I10,10F16.6)
 102 FORMAT (F10.6,10F16.6)
