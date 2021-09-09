@@ -34,7 +34,7 @@ REAL*8, ALLOCATABLE :: dummy(:,:,:),cv(:,:,:),prob_2D(:,:),prob_mtd(:,:,:)
 REAL*8, ALLOCATABLE :: gridmin(:),gridmax(:),griddif(:),vbias(:,:),ct(:,:),norm(:)
 INTEGER,ALLOCATABLE :: nbin(:),indx(:),t(:),t_cv(:)
 INTEGER :: md_steps,mtd_steps,dummy1,i,j,t_min,t_max,narg
-INTEGER :: i_md,ncv,w_hill,w_cv,n1,n2,prob_nD,cv_mtd,cv_us,cv_num(3)
+INTEGER :: i_md,ncv,w_hill,w_cv,prob_nD,cv_mtd,cv_us,cv_num(3)
 INTEGER :: ii,jj,kk,u,m,ir,nr,ios
 LOGICAL :: pmf,probT,spline,inpgrid,read_ct,read_vbias,max_step
 CHARACTER*5   :: mtd,tool
@@ -301,24 +301,24 @@ IF (jj .eq. 0 .and. kk .eq. 0) jj = 1 ; kk = 1
 !---------------------------------------------------------------------------------------------------------------------------!
 IF(mtd .eq. 'y') THEN
 
-CALL mtd_unbiased(au_to_kcal,bias_fact,kt0,kt,kb,md_steps,mtd_steps,w_cv,w_hill &
-           & ,n1,n2,ncv,t_min,t_max,gridmin,gridmax,griddif,vbias,ct,nbin,m,u,mtd,code_name,nr)
+CALL mtd_unbiased(au_to_kcal,bias_fact,kt,kb,md_steps,mtd_steps,w_cv,w_hill &
+           & ,ncv,t_min,t_max,gridmin,gridmax,griddif,vbias,ct,nbin,m,mtd,code_name,nr)
 
 CALL mtd_pot(md_steps,mtd_steps,w_cv,w_hill,t_min,t_max,gridmin,gridmax,griddif,vbias, &
-           & ct,m,u,ii,jj,kk,ncv,kt,nbin,cv,den,prob_mtd,norm,ir,nr,mtd,code_name)
+           & ct,m,u,ncv,kt,nbin,cv,den,prob_mtd,norm,ir,nr,mtd,code_name)
 ENDIF
 IF (pmf) THEN
 ALLOCATE (fes(nr))
-  CALL mean_force(max_step,u,m,ncv,cv,nr,kt,gridmin,gridmax,griddif,nbin,t_min,t_max,pcons,kcons &
+  CALL mean_force(max_step,u,ncv,cv,nr,kt,nbin,t_min,t_max,pcons,kcons &
                  & ,fes,mtd,w_cv,w_hill,ct,vbias,code_name)
-  IF(spline) CALL bspline(nr,gridmin,gridmax,pcons,fes)
+  IF(spline) CALL bspline(nr,pcons,fes)
 DEALLOCATE(pcons,fes)
 ELSE
 !---------------------------------------------------------------------------------------------------------------------------!
 !Computing 1-Dimensional Probability along Umbrella Coordinate
 IF (Prob_nD .eq. 1) THEN
-CALL oneD_prob(ii,nr,u,m,mtd,max_step,t_min,t_max,md_steps,den,prob,prob_2D,prob_mtd,ncv,cv,nbin &
-               & ,gridmin,gridmax,griddif,norm,code_name)
+CALL oneD_prob(ii,nr,u,m,mtd,max_step,t_min,t_max,md_steps,den,prob,prob_mtd,ncv,cv,nbin &
+               & ,gridmin,griddif,norm,code_name)
 DEALLOCATE(prob)
 !---------------------------------------------------------------------------------------------------------------------------!
 !Computing 2-Dimensional Probability along Umbrella/MTD (if MTD is enabled) or US/TEMP
@@ -328,8 +328,8 @@ CALL twoD_prob(ii,jj,u,m,nr,kt,w_cv,w_hill,ct,vbias,max_step,t_min,t_max,md_step
               & ncv,cv,nbin,gridmin,gridmax,griddif,norm,mtd,code_name)
 
 ELSEIF (mtd .eq. 'n') THEN
-CALL twoD_temp_prob(ii,jj,u,nr,kt,max_step,t_min,t_max,md_steps,prob_2D,ncv,cv,nbin, &
-              & gridmin,gridmax,griddif,norm,mtd,code_name)
+CALL twoD_temp_prob(jj,u,nr,max_step,t_min,t_max,md_steps,prob_2D,ncv,cv,nbin, &
+              & gridmin,griddif,mtd,code_name)
 !---------------------------------------------------------------------------------------------------------------------------!
 DEALLOCATE(prob_2D) ; DEALLOCATE(prob_mtd)
 DEALLOCATE(ct,cv,vbias,nbin,indx)

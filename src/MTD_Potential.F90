@@ -8,11 +8,11 @@ USE GetSteps
 USE Error_msg
 CONTAINS
 SUBROUTINE mtd_pot(md_steps,mtd_steps,w_cv,w_hill,t_min,t_max,gridmin,gridmax,griddif,vbias, &
-                 ct,m,u,ii,jj,kk,ncv,kt,nbin,cv,den,prob_mtd,norm,ir,nr,mtd,code_name)
+                 ct,m,u,ncv,kt,nbin,cv,den,prob_mtd,norm,ir,nr,mtd,code_name)
 
 IMPLICIT NONE
 INTEGER           :: i_md,md_steps,i_mtd,mtd_steps,t_min,t_max,m,u,w_cv,w_hill
-INTEGER           :: ii,jj,kk,ncv,indx(ncv),nbin(*),j,ir,nr
+INTEGER           :: ncv,indx(ncv),nbin(*),j,ir,nr
 REAL*8            :: kt,den,dum,ct(nr,*),gridmin(*),gridmax(*),griddif(*),vbias(nr,*)
 REAL*8            :: cv(nr,ncv,*),prob_mtd(nr,nbin(u),nbin(m))
 REAL*8            :: pcons(nr),kcons(nr),norm(nr)

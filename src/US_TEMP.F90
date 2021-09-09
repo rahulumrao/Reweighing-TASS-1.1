@@ -7,14 +7,14 @@ CONTAINS
 !=================================================== US vs TEMP Probability ================================================!
 !Compute Unbiased Distribution along Umbrella Coordinate vs One of the Temperature CV
 !
-SUBROUTINE twoD_temp_prob(ii,jj,u,nr,kt,max_step,t_min,t_max,md_steps,prob_2D,ncv,cv,nbin &
-                         & ,gridmin,gridmax,griddif,norm,mtd,code_name)
+SUBROUTINE twoD_temp_prob(jj,u,nr,max_step,t_min,t_max,md_steps,prob_2D,ncv,cv,nbin &
+                         & ,gridmin,griddif,mtd,code_name)
 IMPLICIT NONE
-INTEGER :: ii,jj,u,nr,ir,t,i_md,t_min,t_max,vt_max,md_steps
+INTEGER :: jj,u,nr,ir,t,i_md,t_min,t_max,vt_max,md_steps
 INTEGER :: i_s1,i_s2,ncv,nbin(*),index1,index2
-REAL*8  :: dum,den,s1,s2,kt
-REAL*8  :: prob_2D(nbin(u),nbin(jj)),gridmin(*),gridmax(*),griddif(*),cv(nr,ncv,*)
-REAL*8  :: norm(nr),pcons(nr),kcons(nr)
+REAL*8  :: dum,den,s1,s2
+REAL*8  :: prob_2D(nbin(u),nbin(jj)),gridmin(*),griddif(*),cv(nr,ncv,*)
+REAL*8  :: pcons(nr),kcons(nr)
 LOGICAL :: max_step
 CHARACTER(LEN=5)   :: mtd
 CHARACTER(LEN=50)  :: filename_loc

@@ -12,14 +12,14 @@ USE GetSteps
 USE GetFileName
 USE MTD_Unbais
 CONTAINS
-SUBROUTINE mean_force(max_step,u,m,ncv,cv,nr,kt,gridmin,gridmax,griddif,nbin,t_min,t_max,pcons,kcons &
-                     & ,fes,mtd,w_cv,w_hill,ct,vbias,code_name)
+SUBROUTINE mean_force(max_step,u,ncv,cv,nr,kt,nbin,t_min,t_max,pcons,kcons &
+                 & ,fes,mtd,w_cv,w_hill,ct,vbias,code_name)
 IMPLICIT NONE
 INTEGER                 :: i,i_md,i_mtd,t_min,t_max,nr
 INTEGER                 :: ncv,w_cv,w_hill,md_steps
-INTEGER                 :: nbin(*),u,m,vt_max
+INTEGER                 :: nbin(*),u,vt_max
 REAL*8                  :: diff_s,den,num,kt,dum
-REAL*8                  :: gridmin(*),gridmax(*),griddif(*)
+!REAL*8                  :: gridmin(*),gridmax(*),griddif(*)
 REAL*8                  :: vbias(nr,*),ct(nr,*),cv(nr,ncv,*)
 REAL*8                  :: pcons(nr),kcons(nr)
 REAL*8,ALLOCATABLE      :: dummy(:,:,:),prob(:)

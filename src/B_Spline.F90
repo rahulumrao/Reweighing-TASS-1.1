@@ -1,6 +1,6 @@
 MODULE B_Spline
 CONTAINS
-SUBROUTINE bspline(nr,gridmin,gridmax,pcons,fes)
+SUBROUTINE bspline(nr,pcons,fes)
 !*****************************************************************************************
     USE bspline_module
     USE bspline_kinds_module, only: wp, ip
@@ -19,7 +19,7 @@ SUBROUTINE bspline(nr,gridmin,gridmax,pcons,fes)
     REAL(wp),ALLOCATABLE        :: x(:),f1(:),fval(:)
     REAL(wp),ALLOCATABLE        :: xval(:)
     REAL(wp),ALLOCATABLE        :: tx(:)
-    REAL(wp)                    :: val,errmax,gridmin(*),gridmax(*)
+    REAL(wp)                    :: val,errmax!,gridmin(*),gridmax(*)
     REAL(wp),DIMENSION(3*kx)    :: w1_1d !! work array
     LOGICAL                     :: extrap
 !    type(pyplot) :: plt

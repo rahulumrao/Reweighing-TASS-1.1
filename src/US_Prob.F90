@@ -8,12 +8,12 @@ CONTAINS
 !================================================== US Probability =========================================================!
 !Compute 1 Dimensional Probability along Umbrella Coordinate
 !
-SUBROUTINE oneD_prob(ii,nr,u,m,mtd,max_step,t_min,t_max,md_steps,den,prob,prob_2D,prob_mtd,ncv,cv,nbin &
-           & ,gridmin,gridmax,griddif,norm,code_name)
+SUBROUTINE oneD_prob(ii,nr,u,m,mtd,max_step,t_min,t_max,md_steps,den,prob,prob_mtd,ncv,cv,nbin &
+           & ,gridmin,griddif,norm,code_name)
 IMPLICIT NONE
 INTEGER :: ii,ir,nr,u,m,i_md,t_min,vt_max,t_max,index1,md_steps,i_s1,i_s2,ncv,nbin(*)
-REAL*8  :: den,dum,s1,s2,prob(nbin(u)),gridmin(*),gridmax(*),griddif(*),cv(nr,ncv,*)
-REAL*8  :: prob_2D(nbin(u),nbin(m)),prob_mtd(nr,nbin(u),nbin(m))
+REAL*8  :: den,dum,s1,s2,prob(nbin(u)),gridmin(*),griddif(*),cv(nr,ncv,*)
+REAL*8  :: prob_mtd(nr,nbin(u),nbin(m))
 REAL*8  :: prob_1D(nr,99999),pcons(nr),kcons(nr),norm(*)
 LOGICAL :: max_step
 CHARACTER*5  :: mtd

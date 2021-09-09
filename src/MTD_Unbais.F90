@@ -10,12 +10,12 @@ CONTAINS
 !---------------------------------------------------------------------------------------------------------------------------!
 !Compute WT-MTD unbiased potential
 !
-SUBROUTINE mtd_unbiased(au_to_kcal,bias_fact,kt0,kt,kb,md_steps,mtd_steps,w_cv,w_hill &
-           & ,n1,n2,ncv,t_min,t_max,gridmin,gridmax,griddif,vbias,ct,nbin,m,u,mtd,code_name,nr)
+SUBROUTINE mtd_unbiased(au_to_kcal,bias_fact,kt,kb,md_steps,mtd_steps,w_cv,w_hill &
+           & ,ncv,t_min,t_max,gridmin,gridmax,griddif,vbias,ct,nbin,m,mtd,code_name,nr)
 IMPLICIT NONE
-INTEGER :: j,i_mtd,mtd_steps,i_md,md_steps,mtd_max,n1,n2,m,u,ir,nr
+INTEGER :: j,i_mtd,mtd_steps,i_md,md_steps,mtd_max,m,ir,nr
 INTEGER :: i_s1,w_cv,w_hill,ncv,t_max,t_min,nbin(ncv)
-REAL*8  :: bias_fact,kt0,kt,kb,ktb,au_to_kcal
+REAL*8  :: bias_fact,kt,kb,ktb,au_to_kcal
 REAL*8  :: dummy1,diff_s2,ds2,ss,hh,num,den,alpha,dum
 REAL*8,ALLOCATABLE             :: width(:,:),ht(:,:),hill(:,:),cv(:,:,:)
 REAL*8,DIMENSION(ncv)          :: gridmin,gridmax,griddif
