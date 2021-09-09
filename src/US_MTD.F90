@@ -8,28 +8,31 @@ CONTAINS
 !Compute Unbiased Distribution Along Umbrella Coordinate vs MTD coordinate
 !
 SUBROUTINE twoD_prob(ii,jj,u,m,nr,kt,w_cv,w_hill,ct,vbias,max_step,t_min,t_max,md_steps,den,prob_mtd &
-                    & ,ncv,cv,nbin,gridmin,gridmax,griddif,norm)
+                    & ,ncv,cv,nbin,gridmin,gridmax,griddif,norm,mtd,code_name)
 
 IMPLICIT NONE
 INTEGER :: ii,jj,u,m,i_md,i_mtd,t_min,t_max,index1,md_steps,i_s1,i_s2,ncv,nbin(*),w_cv,w_hill,indx(2)
-INTEGER :: ir,nr,vt_max
+INTEGER :: ir,nr,vt_max,ios
 REAL*8  :: dum,den,s1,s2,kt,norm(nr)
 REAL*8  :: prob_mtd(nr,nbin(u),nbin(m)),prob_2D(nbin(u),nbin(m))
 REAL*8  :: gridmin(*),gridmax(*),griddif(*),cv(nr,ncv,*),vbias(nr,*),ct(nr,*)
 LOGICAL :: max_step
-REAL*8,ALLOCATABLE :: pcons(:),kcons(:)
-CHARACTER(LEN=10)  :: code_name,mtd
+REAL*8  :: pcons(nr),kcons(nr)
+CHARACTER(LEN=10)  :: code_name
+CHARACTER(LEN=5)   :: mtd
 CHARACTER(LEN=50)  :: filename_loc
-CHARACTER(LEN=50),ALLOCATABLE :: filename(:),filename_mtd(:)
+CHARACTER(LEN=50)  :: filename(nr),filename_mtd(2,nr)
 !--------------------------------------------------------------------------------------------------
 CALL file_input(nr,code_name,mtd,pcons,kcons,filename,filename_mtd)
-vt_max = t_max
-!PRINT*,'t_min = ',t_min
+!PRINT*,filename(1),code_name
+!=====================================================================!
 IF (ii .eq. u .and. jj .eq. m ) THEN
-DO ir = 1,nr        
-OPEN(11,FILE=filename(ir))
-CALL get_steps(11,md_steps)
+vt_max = t_max        
+DO ir = 1,nr
+OPEN(22,FILE=filename(ir))
+CALL get_steps(22,md_steps)
 CALL max_t (max_step,t_min,t_max,vt_max,md_steps)
+!WRITE(6,'(A,I5,2X,A,I5)')'Minumum MD Steps =>',t_min,'; Maximum MD Steps =>',t_max
 !--------------------------------------------------------------------------------------------------
 DO i_md=t_min,t_max
 
@@ -57,6 +60,6 @@ END DO
 ENDDO
 WRITE(*,'(A)')'Unbiased 2D distribution along US vs MTD  written in Pu_2D.dat'
 ENDIF
-CLOSE(2)
+CLOSE(2) ; CLOSE(22)
 END SUBROUTINE
 END MODULE US_MTD

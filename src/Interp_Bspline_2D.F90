@@ -30,14 +30,14 @@
     IF (ios .ne. 0) STOP '"ERROR : Input File does not exist"'
     WRITE(6,'(A)') "ENTER THE OUTPUT FILENAME :"
     READ(5,*) outfile
-    WRITE(6,'(A)') "GRID SIZE IN x-axis:"
+    WRITE(6,'(A)') "BIN SIZE IN x-axis:"
     READ(5,*) nx
     WRITE(6,'(A)') "ORDER OF INTERPOLATION (number of points to evaluate interpolant)"
     READ(5,*)spoints
     
     CALL get_steps(20,n)
     ny = (n-nx)/nx ; nxv = spoints*nx ; nyv = spoints*ny
-    
+    PRINT*,nx 
     ALLOCATE(x(nx),y(ny))
     ALLOCATE(xval(nxv),yval(nyv))
     ALLOCATE(tx(nx+kx),ty(ny+ky))

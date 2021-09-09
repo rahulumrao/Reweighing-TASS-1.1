@@ -8,26 +8,27 @@ CONTAINS
 !Compute Unbiased Distribution along Umbrella Coordinate vs One of the Temperature CV
 !
 SUBROUTINE twoD_temp_prob(ii,jj,u,nr,kt,max_step,t_min,t_max,md_steps,prob_2D,ncv,cv,nbin &
-                         & ,gridmin,gridmax,griddif,code_name)
+                         & ,gridmin,gridmax,griddif,norm,mtd,code_name)
 IMPLICIT NONE
 INTEGER :: ii,jj,u,nr,ir,t,i_md,t_min,t_max,vt_max,md_steps
-INTEGER :: i_s1,i_s2,ncv,nbin(*),indx(2),index1,index2
+INTEGER :: i_s1,i_s2,ncv,nbin(*),index1,index2
 REAL*8  :: dum,den,s1,s2,kt
 REAL*8  :: prob_2D(nbin(u),nbin(jj)),gridmin(*),gridmax(*),griddif(*),cv(nr,ncv,*)
-REAL*8  :: pcons(nr),kcons(nr)
+REAL*8  :: norm(nr),pcons(nr),kcons(nr)
 LOGICAL :: max_step
+CHARACTER(LEN=5)   :: mtd
 CHARACTER(LEN=50)  :: filename_loc
-CHARACTER(LEN=10)  :: code_name,mtd
-CHARACTER(LEN=50)  :: filename(nr),filename_mtd(nr)
+CHARACTER(LEN=10)  :: code_name
+CHARACTER(LEN=50)  :: filename(nr),filename_mtd(2,nr)
 
 CALL file_input(nr,code_name,mtd,pcons,kcons,filename,filename_mtd)
-
+PRINT*,'HERE',code_name,filename(1)
 den = 0.0d0 ; t = jj
 vt_max = t_max
 !PRINT*,'t_min = ',t_min
 DO ir = 1,nr
-OPEN(11,FILE=filename(ir))
-CALL get_steps(11,md_steps)
+OPEN(22,FILE=filename(ir))
+CALL get_steps(22,md_steps)
 CALL max_t (max_step,t_min,t_max,vt_max,md_steps)
 
 prob_2D = 0
@@ -66,7 +67,6 @@ DO i_s1 = 1,nbin(u)
 END DO
 ENDDO
 WRITE(*,'(A)')'Unbiased 2D distribution along US vs TEMP  written in PROB_2D.dat'
-CLOSE(2)
-
+CLOSE(2) ; CLOSE(22)
 END SUBROUTINE
 END MODULE US_TEMP

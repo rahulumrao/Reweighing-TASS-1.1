@@ -28,20 +28,20 @@ USE MeanForce
 !USE wham_code
 USE B_Spline
 IMPLICIT NONE
-REAL*8              :: dummy11,den,dum,alpha,Ro,kt0,kt,ktb,s1,s2,bias_fact
-REAL*8, ALLOCATABLE :: cv1(:),prob(:),fes(:),fes1(:),grid(:),pcons(:),kcons(:)
-REAL*8, ALLOCATABLE :: dummy(:,:,:),cv(:,:,:),prob_2D(:,:),prob_3D(:,:,:),prob_mtd(:,:,:)
+REAL*8              :: dummy11,den,kt0,kt,bias_fact
+REAL*8, ALLOCATABLE :: prob(:),fes(:),pcons(:),kcons(:)
+REAL*8, ALLOCATABLE :: dummy(:,:,:),cv(:,:,:),prob_2D(:,:),prob_mtd(:,:,:)
 REAL*8, ALLOCATABLE :: gridmin(:),gridmax(:),griddif(:),vbias(:,:),ct(:,:),norm(:)
 INTEGER,ALLOCATABLE :: nbin(:),indx(:),t(:),t_cv(:)
-INTEGER :: md_steps,mtd_steps,dummy1,i,j,index1,k,t_min,t_max,i_s1,i_s2,narg
-INTEGER :: i_md,i_mtd,ncv,w_hill,w_cv,n1,n2,n3,n4,prob_nD,cv_mtd,cv_us,cv_num(3)
-INTEGER :: ii,jj,kk,l,u,m,ir,nr,ios
+INTEGER :: md_steps,mtd_steps,dummy1,i,j,t_min,t_max,narg
+INTEGER :: i_md,ncv,w_hill,w_cv,n1,n2,prob_nD,cv_mtd,cv_us,cv_num(3)
+INTEGER :: ii,jj,kk,u,m,ir,nr,ios
 LOGICAL :: pmf,probT,spline,inpgrid,read_ct,read_vbias,max_step
 CHARACTER*5   :: mtd,tool
 CHARACTER*10  :: code_name
 CHARACTER*120 :: arg 
 CHARACTER*50  :: filename_loc
-CHARACTER(LEN=50),ALLOCATABLE :: filename(:),filename_mtd(:)
+CHARACTER(LEN=50),ALLOCATABLE :: filename(:),filename_mtd(:,:)
 REAL*8, PARAMETER :: kb = 1.9872041E-3 !kcal K-1 mol-1
 REAL*8, PARAMETER :: au_to_kcal = 627.51 
 REAL*8, PARAMETER :: kj_to_kcal = 0.239006 
@@ -125,7 +125,7 @@ j = j + 1
       CALL GETARG(i+j+2,arg)
       READ(arg,*)griddif(ii)
 j = j + 2 
-100 FORMAT (I4,2X,3F16.4)
+!100 FORMAT (I4,2X,3F16.4)
 !WRITE(*,100)ii,gridmin(ii),gridmax(ii),griddif(ii)
 ENDDO
       inpgrid=.true.
@@ -200,7 +200,7 @@ WRITE(*,'(A85)')'===============================================================
 STOP
 ENDIF ; ENDIF 
 !-----------------------------------------------------------------------------------------------------!
-ALLOCATE(filename(nr))          ; ALLOCATE(filename_mtd(nr))
+ALLOCATE(filename(nr))          ; ALLOCATE(filename_mtd(2,nr))
 ALLOCATE(cv(nr,ncv,md_steps))   ; ALLOCATE(dummy(nr,ncv,md_steps))
 ALLOCATE(nbin(ncv))             ; ALLOCATE(vbias(nr,md_steps))
 ALLOCATE(ct(nr,mtd_steps))      ; ALLOCATE(t(ncv))
@@ -220,8 +220,8 @@ DO ir = 1,nr
       kcons(ir)=kcons(ir)*au_to_kcal
       READ(10,'(A)')filename(ir)
      IF(mtd .eq. 'y')THEN
-       READ(10,'(A)')
-       READ(10,'(A)')
+       READ(10,'(A)')filename_mtd(1,ir)
+       READ(10,'(A)')filename_mtd(2,ir)
      ENDIF
 CALL get_filename('cv.dat_',filename_loc,ir)
 OPEN(14,FILE=filename_loc,STATUS='unknown')
@@ -246,7 +246,7 @@ CLOSE(11);CLOSE(14)
      kcons(ir)=kcons(ir)*kj_to_kcal
      READ(10,'(A)')filename(ir)
    IF(mtd .eq. 'y') THEN
-     READ(10,'(A)')filename_mtd(ir)
+     READ(10,'(A)')filename_mtd(1,ir)
    ENDIF
 
 CALL get_filename('cv.dat_',filename_loc,ir)
@@ -325,10 +325,11 @@ DEALLOCATE(prob)
 ELSEIF (Prob_nd .eq. 2) THEN
 IF (mtd .eq. 'y') THEN
 CALL twoD_prob(ii,jj,u,m,nr,kt,w_cv,w_hill,ct,vbias,max_step,t_min,t_max,md_steps,den,prob_mtd, &
-              & ncv,cv,nbin,gridmin,gridmax,griddif,norm)
+              & ncv,cv,nbin,gridmin,gridmax,griddif,norm,mtd,code_name)
 
 ELSEIF (mtd .eq. 'n') THEN
-CALL twoD_temp_prob(ii,jj,u,nr,kt,max_step,t_min,t_max,md_steps,prob_2D,ncv,cv,nbin,gridmin,gridmax,griddif,code_name)
+CALL twoD_temp_prob(ii,jj,u,nr,kt,max_step,t_min,t_max,md_steps,prob_2D,ncv,cv,nbin, &
+              & gridmin,gridmax,griddif,norm,mtd,code_name)
 !---------------------------------------------------------------------------------------------------------------------------!
 DEALLOCATE(prob_2D) ; DEALLOCATE(prob_mtd)
 DEALLOCATE(ct,cv,vbias,nbin,indx)

@@ -19,18 +19,19 @@ LOGICAL :: max_step
 CHARACTER*5  :: mtd
 CHARACTER*10 :: code_name
 CHARACTER(LEN=50) :: filename_loc
-CHARACTER(LEN=50),ALLOCATABLE :: filename(:),filename_mtd(:)
+CHARACTER(LEN=50) :: filename(nr),filename_mtd(2,nr)
 !-----------------------------------------------------------------------------------!
-ALLOCATE(filename(nr))
-ALLOCATE(filename_mtd(nr))
+!ALLOCATE(filename(nr))
+!ALLOCATE(filename_mtd(nr))
 !-----------------------------------------------------------------------------------!
 CALL file_input(nr,code_name,mtd,pcons,kcons,filename,filename_mtd)
 vt_max = t_max
 !PRINT*,'t_min = ',t_min
 !-----------------------------------------------------------------------------------!
 IF (ii .eq. u .and. mtd .eq. 'y') THEN    ! on;y if MetaD bias is enabled
+OPEN(22,FILE=filename(ir))
 DO ir = 1,nr
-CALL get_steps(11,md_steps)
+CALL get_steps(22,md_steps)
 CALL max_t (max_step,t_min,t_max,vt_max,md_steps)  ! get t_max
 !-----------------------------------------------------------------------------------!
 CALL get_filename('PROB.dat_',filename_loc,ir) ! individual file to write probability
@@ -50,11 +51,12 @@ OPEN(2,FILE=filename_loc,STATUS='unknown')
   ENDDO
 ENDDO
 ENDIF
+CLOSE(22)
 !-----------------------------------------------------------------------------------!
 IF (ii .eq. u .and. mtd .eq. 'n') THEN
 DO ir = 1,nr
-OPEN(11,FILE=filename(ir))
-CALL get_steps(11,md_steps)
+OPEN(22,FILE=filename(ir))
+CALL get_steps(22,md_steps)
 CALL max_t (max_step,t_min,t_max,vt_max,md_steps)
 !PRINT*,'t_max = ',t_max
 
@@ -87,7 +89,7 @@ DO i_s1 = 1,nbin(u)
      ENDIF  
 ENDDO ; ENDDO ; ENDIF
 !-----------------------------------------------------------------------------------!
-CLOSE(2) ; CLOSE(11)
+CLOSE(2) ; CLOSE(22)
 WRITE(*,'(A)')"Unbiased 1D distribution along US  written in 'PROB.dat!'"
 END SUBROUTINE
 END MODULE US_Prob

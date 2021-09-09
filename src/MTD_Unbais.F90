@@ -13,28 +13,28 @@ CONTAINS
 SUBROUTINE mtd_unbiased(au_to_kcal,bias_fact,kt0,kt,kb,md_steps,mtd_steps,w_cv,w_hill &
            & ,n1,n2,ncv,t_min,t_max,gridmin,gridmax,griddif,vbias,ct,nbin,m,u,mtd,code_name,nr)
 IMPLICIT NONE
-INTEGER :: i,j,i_mtd,mtd_steps,i_md,md_steps,mtd_max,n1,n2,m,u,ir,nr
-INTEGER :: i_s1,i_s2,w_cv,w_hill,ncv,index1,index2,t_max,t_min,nbin(ncv)
-REAL*8  :: bias_fact,kt0,kt,kb,ktb,au_to_kcal,s1,s2
+INTEGER :: j,i_mtd,mtd_steps,i_md,md_steps,mtd_max,n1,n2,m,u,ir,nr
+INTEGER :: i_s1,w_cv,w_hill,ncv,t_max,t_min,nbin(ncv)
+REAL*8  :: bias_fact,kt0,kt,kb,ktb,au_to_kcal
 REAL*8  :: dummy1,diff_s2,ds2,ss,hh,num,den,alpha,dum
 REAL*8,ALLOCATABLE             :: width(:,:),ht(:,:),hill(:,:),cv(:,:,:)
 REAL*8,DIMENSION(ncv)          :: gridmin,gridmax,griddif
 REAL*8,DIMENSION(nbin(m))      :: grid
-REAL*8,ALLOCATABLE             :: ct(:,:),fes_2D(:),prob_2D(:,:)
+REAL*8,ALLOCATABLE             :: ct(:,:),fes_2D(:)
 REAL*8,DIMENSION(nr,md_steps)  :: vbias
-REAL*8                         :: norm(nr),kcons(nr),pcons(nr)
+REAL*8                         :: kcons(nr),pcons(nr)
 REAL*8,PARAMETER               :: kj_to_kcal = 0.239006
 CHARACTER(LEN=5)               :: mtd
 CHARACTER(LEN=10)              :: code_name
 CHARACTER(LEN=50)              :: filename_loc
-CHARACTER(LEN=50)              :: filename(nr),filename_mtd(nr)
+CHARACTER(LEN=50)              :: filename(nr),filename_mtd(2,nr)
 !! #### m = METADYNAMICS CV INDEX
 !=============================================================================================================================!
 CALL file_input(nr,code_name,mtd,pcons,kcons,filename,filename_mtd)
 
 DO ir = 1,nr
 OPEN(22,FILE=filename(ir))
-OPEN(23,FILE=filename_mtd(ir))
+OPEN(23,FILE=filename_mtd(1,ir))
 CALL get_steps(22,md_steps)
 CALL get_steps(23,mtd_steps)
 !--------------------------------------------------------------------------------------------------!
@@ -55,14 +55,18 @@ ALLOCATE(cv(nr,ncv,md_steps))
 !--------------------------------------------------------------------------------------------------!
 DO ir = 1,nr
 IF (code_name .eq. 'CPMD') THEN
+OPEN(22,FILE=filename_mtd(1,ir))
+OPEN(23,FILE=filename_mtd(2,ir))
+CALL get_steps(22,mtd_steps)
+
    DO i_mtd=1,mtd_steps
-     READ(12,*) dummy1,dummy1,width(ir,i_mtd),ht(ir,i_mtd)
-     READ(13,*) dummy1,hill(ir,i_mtd)
+     READ(22,*) dummy1,dummy1,width(ir,i_mtd),ht(ir,i_mtd)
+     READ(23,*) dummy1,hill(ir,i_mtd)
      ht(ir,i_mtd) = ht(ir,i_mtd)*au_to_kcal       ! au_to_kcal 
    END DO
 !--------------------------------------------------------------------------------------------------!
 ELSEIF (code_name .eq. 'PLUMED') THEN
-OPEN(22,FILE=filename_mtd(ir))
+OPEN(22,FILE=filename_mtd(1,ir))
 OPEN(23,FILE=filename(ir))
 CALL get_steps(22,mtd_steps)
 CALL get_steps(23,md_steps)
@@ -121,7 +125,7 @@ CLOSE(21)
 ENDDO
 DEALLOCATE(fes_2D)
 !--------------------------------------------------------------------------------------------------!
-WRITE(*,'(A)')'CV values written in ',filename_loc
+WRITE(*,'(A,/)')'ct values written in ct_test.dat_$'
 !!@calculate v(s,t)
 
 DO ir = 1,nr
@@ -142,10 +146,11 @@ DO i_mtd = 1,mtd_max
 END DO
    vbias(ir,i_md) = dum
     WRITE(21,'(I10,F16.8)')i_md,vbias(ir,i_md)
-!    WRITE(6,*)i_md,vbias(ir,i_md)
+!    WRITE(6,*)ir,vbias(ir,i_md)
  END DO
 CLOSE(21)
 ENDDO
+WRITE(*,'(A,/)')'vbias values written in vbias_test.dat_$'
 !--------------------------------------------------------------------------------------------------!
 END SUBROUTINE mtd_unbiased
 END MODULE MTD_Unbais

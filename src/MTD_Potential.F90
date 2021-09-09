@@ -12,14 +12,13 @@ SUBROUTINE mtd_pot(md_steps,mtd_steps,w_cv,w_hill,t_min,t_max,gridmin,gridmax,gr
 
 IMPLICIT NONE
 INTEGER           :: i_md,md_steps,i_mtd,mtd_steps,t_min,t_max,m,u,w_cv,w_hill
-INTEGER           :: ii,jj,kk,ncv,indx(ncv),nbin(*),i,j,ir,nr,iunit,i_s1,i_s2
-REAL*8            :: s1,s2
+INTEGER           :: ii,jj,kk,ncv,indx(ncv),nbin(*),j,ir,nr
 REAL*8            :: kt,den,dum,ct(nr,*),gridmin(*),gridmax(*),griddif(*),vbias(nr,*)
 REAL*8            :: cv(nr,ncv,*),prob_mtd(nr,nbin(u),nbin(m))
 REAL*8            :: pcons(nr),kcons(nr),norm(nr)
 CHARACTER(LEN=5)  :: mtd
 CHARACTER(LEN=10) :: code_name
-CHARACTER(LEN=50) :: filename(nr),filename_mtd(nr)
+CHARACTER(LEN=50) :: filename(nr),filename_mtd(2,nr)
 !======================================================================================================!
 
 CALL file_input(nr,code_name,mtd,pcons,kcons,filename,filename_mtd)
@@ -27,10 +26,10 @@ CALL file_input(nr,code_name,mtd,pcons,kcons,filename,filename_mtd)
 !calculate prob (unbiased from MTD potential)
 prob_mtd = 0.0
 DO ir = 1,nr
-OPEN(21,FILE=filename(ir))
-OPEN(22,FILE=filename_mtd(ir))
-CALL get_steps(21,md_steps)
-CALL get_steps(22,mtd_steps)
+OPEN(22,FILE=filename(ir))
+OPEN(23,FILE=filename_mtd(1,ir))
+CALL get_steps(22,md_steps)
+CALL get_steps(23,mtd_steps)
 
 den = 0.0 ; dum = 0.0 
 DO i_md=t_min,t_max
@@ -51,7 +50,7 @@ ENDDO
 END DO
 norm(ir) = 1.0d0/(den*griddif(u)*griddif(m))  ! normalization 
 END DO
-CLOSE(21) ; CLOSE(22)
+CLOSE(22) ; CLOSE(23)
 END SUBROUTINE mtd_pot
 END MODULE MTD_Potential
 !======================================================================================================!

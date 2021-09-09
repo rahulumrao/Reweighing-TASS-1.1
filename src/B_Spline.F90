@@ -13,19 +13,19 @@ SUBROUTINE bspline(nr,gridmin,gridmax,pcons,fes)
     INTEGER(ip),PARAMETER       :: kx    = 4    !! order in x
     INTEGER(ip),PARAMETER       :: iknot = 0    !! automatically select the knots
 
-    INTEGER                     :: istat  !! pyplot-fortran status flag
-    INTEGER(ip)                 :: i,j,idx,iflag,inbvx,iloy
-    INTEGER                     :: n,nr,ios
+!    INTEGER                     :: istat  !! pyplot-fortran status flag
+    INTEGER(ip)                 :: i,idx,iflag,inbvx,iloy
+    INTEGER                     :: nr
     REAL(wp),ALLOCATABLE        :: x(:),f1(:),fval(:)
     REAL(wp),ALLOCATABLE        :: xval(:)
     REAL(wp),ALLOCATABLE        :: tx(:)
-    REAL(wp)                    :: val,tru,err,errmax,gridmin(*),gridmax(*)
+    REAL(wp)                    :: val,errmax,gridmin(*),gridmax(*)
     REAL(wp),DIMENSION(3*kx)    :: w1_1d !! work array
     LOGICAL                     :: extrap
 !    type(pyplot) :: plt
     REAL*8                      :: pcons(*)
     REAL*8                      :: fes(*)
-    REAL*8                      :: dummy,dummy1,nb
+    REAL*8                      :: nb
 
     idx = 0
     nx = nr ; nxv = 10*(nr)

@@ -15,10 +15,10 @@ CONTAINS
 SUBROUTINE mean_force(max_step,u,m,ncv,cv,nr,kt,gridmin,gridmax,griddif,nbin,t_min,t_max,pcons,kcons &
                      & ,fes,mtd,w_cv,w_hill,ct,vbias,code_name)
 IMPLICIT NONE
-INTEGER                 :: i,j,i_md,i_mtd,dummy1,n,t_min,t_max,i_s1,i_s2,ir,nr,ios,narg
-INTEGER                 :: ncv,w_cv,w_hill,md_steps,mtd_steps,indx1
-INTEGER                 :: indx,nbin(*),u,m,vt_max
-REAL*8                  :: dummy11,diff_s,den,num,kt,dum
+INTEGER                 :: i,i_md,i_mtd,t_min,t_max,nr
+INTEGER                 :: ncv,w_cv,w_hill,md_steps
+INTEGER                 :: nbin(*),u,m,vt_max
+REAL*8                  :: diff_s,den,num,kt,dum
 REAL*8                  :: gridmin(*),gridmax(*),griddif(*)
 REAL*8                  :: vbias(nr,*),ct(nr,*),cv(nr,ncv,*)
 REAL*8                  :: pcons(nr),kcons(nr)
@@ -28,11 +28,12 @@ REAL*8, PARAMETER       :: kb=1.9872041E-3 !kcal K-1 mol-1
 REAL*8, PARAMETER       :: au_to_kcal = 627.51
 REAL*8, PARAMETER       :: kj_to_kcal = 0.239006
 
-LOGICAL                 :: pmf,inpgrid,read_ct,read_vbias,max_step
+LOGICAL                 :: max_step
+!LOGICAL                 :: read_ct,read_vbias
 CHARACTER*5             :: mtd
-CHARACTER(LEN=50)       :: filename_loc
+!CHARACTER(LEN=50)       :: filename_loc
 CHARACTER(LEN=10)       :: code_name
-CHARACTER(LEN=50)       :: filename(nr),filename_mtd(nr)
+CHARACTER(LEN=50)       :: filename(nr),filename_mtd(2,nr)
 
 IF(nbin(1) .eq. 0 ) STOP "ERROR : NUMBER OF BINS CAN NOT BE ZERO"
 
@@ -80,6 +81,7 @@ ENDIF
    av_dfds(i) = num/den                            ! average of df/ds along every umbrella
 DEALLOCATE(dummy)
 ENDDO
+
 PRINT*,"av_dfds is computed"
 
 OPEN(12,FILE='av_dfds.dat')
